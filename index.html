@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Voice & Chat Connect</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- PeerJS लाइब्रेरी (WebRTC P2P कनेक्शन के लिए) -->
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    <h2>वॉइस व चैट कनेक्ट</h2>
+    <p class="subtitle">सुरक्षित व प्राइवेट P2P कॉलिंग</p>
+
+    <!-- यूज़र की अपनी आईडी -->
+    <div class="card my-id-box">
+      <span>आपकी यूनिक आईडी:</span>
+      <div class="id-wrapper">
+        <strong id="my-peer-id">आईडी जनरेट हो रही है...</strong>
+        <button id="copy-btn" onclick="copyId()">कॉपी करें</button>
+      </div>
+    </div>
+
+    <!-- दूसरे यूज़र से कनेक्ट करने का बॉक्स -->
+    <div class="card connect-box">
+      <input type="text" id="target-peer-id" placeholder="सामने वाले की आईडी दर्ज करें...">
+      <div class="btn-group">
+        <button id="call-btn" class="btn primary-btn" onclick="makeCall()">कॉल करें (वॉइस)</button>
+        <button id="chat-connect-btn" class="btn secondary-btn" onclick="connectChat()">चैट कनेक्ट</button>
+      </div>
+    </div>
+
+    <!-- कॉल स्टेटस और कंट्रोल्स -->
+    <div id="call-status-area" class="card status-box hidden">
+      <p id="call-status-text">कॉल स्टेटस...</p>
+      <div id="incoming-modal" class="hidden">
+        <p><strong id="caller-id-span"></strong> आपसे बात करना चाहता है</p>
+        <div class="btn-group">
+          <button class="btn accept-btn" onclick="acceptCall()">उठाएं (Accept)</button>
+          <button class="btn end-btn" onclick="rejectCall()">काटें (Reject)</button>
+        </div>
+      </div>
+      <button id="end-call-btn" class="btn end-btn hidden" onclick="endCall()">कॉल समाप्त करें</button>
+    </div>
+
+    <!-- चैट सेक्शन -->
+    <div class="card chat-container">
+      <div id="chat-messages" class="messages-list">
+        <div class="msg system">कनेक्ट होने के बाद यहाँ मैसेज दिखेंगे।</div>
+      </div>
+      <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="मैसेज टाइप करें..." onkeypress="handleKeyPress(event)">
+        <button class="btn primary-btn" onclick="sendMessage()">भेजें</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ऑडियो आउटपुट के लिए छुपा हुआ एलिमेंट -->
+  <audio id="remote-audio" autoplay></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
